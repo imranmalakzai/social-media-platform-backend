@@ -40,3 +40,11 @@ export const findById = async (postId) => {
   const [rows] = await pool.query("SELECT * FROM post WHERE id = ?", [postId]);
   return rows[0];
 };
+
+// Get all posts
+export const findAll = async () => {
+  const [rows] = await pool.query(
+    "SELECT p.*,u.profile_image,u.username as author FROM posts p JOIN users u ON p.user_id = u.id",
+  );
+  return rows;
+};
