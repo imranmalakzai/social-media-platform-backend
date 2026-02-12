@@ -8,3 +8,11 @@ export const create = async (comment) => {
   );
   return result.insertId;
 };
+
+// Delete a comment
+export const remove = async (commentId) => {
+  const [result] = await pool.query("DELETE FROM comments WHERE id = ?", [
+    commentId,
+  ]);
+  return result.affectedRows;
+};
