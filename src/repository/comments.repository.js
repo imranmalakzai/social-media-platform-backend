@@ -34,3 +34,9 @@ export const postComments = async (postId) => {
   );
   return rows;
 };
+
+// Get a comment by Id
+export const findById = async (commentId) => {
+  const [rows] = await pool.query("SELECT * FROM WHERE id = ?", [commentId]);
+  return rows;
+};
