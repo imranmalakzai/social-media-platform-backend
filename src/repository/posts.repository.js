@@ -34,3 +34,9 @@ export const changeVisibility = async (visibility, postId) => {
   );
   return result.affectedRows;
 };
+
+// Get a post by id
+export const findById = async (postId) => {
+  const [rows] = await pool.query("SELECT * FROM post WHERE id = ?", [postId]);
+  return rows[0];
+};
