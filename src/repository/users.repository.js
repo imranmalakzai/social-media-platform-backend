@@ -8,3 +8,9 @@ export const create = async (user) => {
   );
   return result.insertId;
 };
+
+// delete user
+export const remove = async (userId) => {
+  const [result] = await pool.query("DELETE FROM users WHERE id = ?", [userId]);
+  return result.affectedRows;
+};
