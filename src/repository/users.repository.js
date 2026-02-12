@@ -61,3 +61,12 @@ export const updateAvatar = async (avatar, userId) => {
   );
   return result.affectedRows;
 };
+
+// update cover image
+export const updateCoverImage = async (coverImage, userId) => {
+  const [result] = await pool.query(
+    "UPDATE users SET cover_image = ? WHERE id = ?",
+    [coverImage, userId],
+  );
+  return result.affectedRows;
+};
