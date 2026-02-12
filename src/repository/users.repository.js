@@ -28,3 +28,9 @@ export const findByEmail = async (email) => {
   ]);
   return rows[0];
 };
+
+// Get all users
+export const find = async () => {
+  const [rows] = await pool.query("SELECT * FROM users");
+  return rows;
+};
