@@ -14,3 +14,9 @@ export const remove = async (userId) => {
   const [result] = await pool.query("DELETE FROM users WHERE id = ?", [userId]);
   return result.affectedRows;
 };
+
+// Get a user by id
+export const findById = async (userId) => {
+  const [rows] = await pool.query("SELECT * users WHERE id = ?", [userId]);
+  return rows[0];
+};
