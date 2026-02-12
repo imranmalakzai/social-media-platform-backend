@@ -16,3 +16,12 @@ export const remove = async (postId) => {
   ]);
   return result.affectedRows;
 };
+
+//update a post (caption,image)
+export const updatePost = async (caption, image, postId) => {
+  const [result] = await pool.query(
+    "UPDATE posts SET image = ?, caption = ? WHERE id = ?",
+    [postId],
+  );
+  return result.affectedRows;
+};
