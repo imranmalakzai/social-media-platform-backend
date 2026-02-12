@@ -52,3 +52,12 @@ export const updatePassword = async (password, userId) => {
   );
   return result;
 };
+
+// update avatar (profile image)
+export const updateAvatar = async (avatar, userId) => {
+  const [result] = await pool.query(
+    "UPDATE users SET profile_image = ? WHERE id = ?",
+    [avatar, userId],
+  );
+  return result.affectedRows;
+};
