@@ -34,3 +34,12 @@ export const find = async () => {
   const [rows] = await pool.query("SELECT * FROM users");
   return rows;
 };
+
+// update profile // username,and bio
+export const updateProfile = async (username, bio, userId) => {
+  const [result] = await pool.query(
+    "UPDATE users SET username = ?,bio = ? WHERE id = ?",
+    [username, bio, userId],
+  );
+  return result.affectedRows;
+};
