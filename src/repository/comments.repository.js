@@ -25,3 +25,12 @@ export const update = async (text, commentId) => {
   );
   return result.affectedRows;
 };
+
+// Get all comments of a post
+export const postComments = async (postId) => {
+  const [rows] = await pool.query(
+    "SELECT c.*,u.id,u.username,u.profile_image FROM comments c JOIN users u ON c.user_id = u.id WHERE c.post_id = ?",
+    [postId],
+  );
+  return rows;
+};
