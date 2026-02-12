@@ -25,3 +25,12 @@ export const updatePost = async (caption, image, postId) => {
   );
   return result.affectedRows;
 };
+
+// change visibility
+export const changeVisibility = async (visibility, postId) => {
+  const [result] = await pool.query(
+    "UPDATE posts SET visibility = ? WHERE id = ?",
+    [visibility, postId],
+  );
+  return result.affectedRows;
+};
