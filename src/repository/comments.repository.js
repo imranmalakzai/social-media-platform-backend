@@ -16,3 +16,12 @@ export const remove = async (commentId) => {
   ]);
   return result.affectedRows;
 };
+
+// update a comment
+export const update = async (text, commentId) => {
+  const [result] = await pool.query(
+    "UPDATE comments SET text = ? WHERE id = ?",
+    [text, commentId],
+  );
+  return result.affectedRows;
+};
