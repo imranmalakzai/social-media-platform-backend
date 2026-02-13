@@ -13,3 +13,11 @@ export const create = async (notification) => {
   );
   return result.insertId;
 };
+
+// Get all notifications of a user
+export const findAll = async (user_id) => {
+  const [rows] = await pool.query(
+    "SELECT n.*,u.username,u.profile_image FROM notifications n JOIN users u ON u.id = n.sender_id ORDER BY created_at DESC",
+  );
+  return rows;
+};
