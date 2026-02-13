@@ -17,3 +17,12 @@ export const remove = async (postId) => {
   );
   return result.affectedRows;
 };
+
+// Get all saved posts
+export const findAll = async (user_id) => {
+  const [rows] = await pool.query(
+    "SELECT sp.*,u.username,u.profile_image,p.caption,p.image FROM saved_posts sp JOIN users u on u.id = sp.user_id JOIN posts p ON p.id = sp.post_id WHERE sp.user_id = ?",
+    [user_id],
+  );
+  return rows;
+};
