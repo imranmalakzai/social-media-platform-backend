@@ -26,3 +26,11 @@ export const findAll = async (user_id) => {
   );
   return rows;
 };
+
+// Get a saved post by id
+export const findById = async (savedPostId) => {
+  const [rows] = await pool.query("SELECT * FROM saved_posts WHERE id = ?", [
+    savedPostId,
+  ]);
+  return rows[0];
+};
