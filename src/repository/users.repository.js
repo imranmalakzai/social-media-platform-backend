@@ -3,8 +3,8 @@ import { pool } from "../config/db.config.js";
 // create new user
 export const create = async (user) => {
   const [result] = await pool.query(
-    "INSERT INTO users (username,email,password,bio,profileImage,coverImage) VALUES (?,?,?,?,?,?)",
-    [user.username, user.email, user.bio, user.profileImage, user.coverImage],
+    "INSERT INTO users (username,email,password) VALUES (?,?,?)",
+    [user.username, user.email, user.password],
   );
   return result.insertId;
 };
@@ -23,7 +23,7 @@ export const findById = async (userId) => {
 
 // Get a user by Email
 export const findByEmail = async (email) => {
-  const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [
+  const [rows] = await pool.query("SELECT id FROM users WHERE email = ?", [
     email,
   ]);
   return rows[0];
