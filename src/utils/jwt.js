@@ -10,3 +10,13 @@ export const accessToken = async (user) => {
   );
   return token;
 };
+
+// Generate Refresh Token
+export const refreshToken = async (user) => {
+  const token = await jwt.sign(
+    { id: user.id, username: user.username },
+    env.JWT_REFRESH_TOKEN_SECRET,
+    { expiresIn: env.JWT_REFRESH_TOKEN_EXPIRY },
+  );
+  return token;
+};
