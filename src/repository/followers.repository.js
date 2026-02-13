@@ -19,9 +19,18 @@ export const remove = async (follower_id, following_id) => {
 };
 
 // Fetch all followers of a user
-export const findAll = async (userId) => {
+export const findAllFollowers = async (userId) => {
   const [rows] = await pool.query(
     "SELECT f.* FROM follows f JOIN users u ON u.id = f.follower_id WHERE f.following_id = ?",
+    [userId],
+  );
+  return rows;
+};
+
+// Fetch all users following
+export const findAllFollowing = async (userId) => {
+  const [rows] = await pool.query(
+    "SELECT f.* FROM follows f JOIN users u ON u.id = f.following_id WHERE f.follower_id = ?",
     [userId],
   );
   return rows;
