@@ -24,3 +24,12 @@ export const findAll = async () => {
   );
   return rows;
 };
+
+// Get an story by Id
+export const findById = async (storyId) => {
+  const [rows] = await pool.query(
+    "SELECT s.*,u.username,u.profile_image FROM stories s JOIN users u ON s.user_id = u.id WHERE s.id = ?",
+    [storyId],
+  );
+  return rows[0];
+};
