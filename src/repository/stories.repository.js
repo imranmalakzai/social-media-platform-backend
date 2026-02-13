@@ -10,3 +10,9 @@ export const create = async (story) => {
 
   return rows;
 };
+
+// Delete story
+export const remove = async (id) => {
+  const [result] = await pool.query("DELETE FROM stories WHERE id = ?", id);
+  return result.affectedRows;
+};
