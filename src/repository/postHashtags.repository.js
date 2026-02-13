@@ -11,7 +11,7 @@ export const create = async (post_id, hashtag_id) => {
 // Get all hashTags of a post
 export const findAll = async () => {
   const [rows] = await pool.query(
-    "SELECT *.pt,ht.name FROM post_hashtags pt JOIN ht ON pt.hashtag_id = ht.id",
+    "SELECT pt.*,ht.name FROM post_hashtags pt JOIN hashtags ht ON pt.hashtag_id = ht.id",
   );
   return rows;
 };
