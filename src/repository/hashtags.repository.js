@@ -7,3 +7,11 @@ export const create = async (name) => {
   ]);
   return result.insertId;
 };
+
+// Get hashTag by name
+export const findByName = async (name) => {
+  const [rows] = await pool.query("SELECT * FROM hashtags WHERE name = ?", [
+    name,
+  ]);
+  return rows[0];
+};
