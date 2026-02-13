@@ -16,3 +16,11 @@ export const remove = async (id) => {
   const [result] = await pool.query("DELETE FROM stories WHERE id = ?", id);
   return result.affectedRows;
 };
+
+// Get all active stories
+export const findAll = async () => {
+  const [rows] = await pool.query(
+    "SELECT s.*,u.username,u.profile_image FROM stories s JOIN users u ON s.user_id = u.id",
+  );
+  return rows;
+};
