@@ -13,14 +13,17 @@ export const create = async (story) => {
 
 // Delete story
 export const remove = async (id) => {
-  const [result] = await pool.query("DELETE FROM stories WHERE id = ?", id);
+  const [result] = await pool.query(
+    "DELETE FROM stories WHERE id = ? AND expires_at <= NOW()",
+    id,
+  );
   return result.affectedRows;
 };
 
 // Get all active stories
 export const findAll = async () => {
   const [rows] = await pool.query(
-    "SELECT s.*,u.username,u.profile_image FROM stories s JOIN users u ON s.user_id = u.id",
+    "SELECT s.*,u.username,u.profile_image FROM stories s JOIN users u ON s.user_id = u.id  AND s.expires_at <= NOW()",
   );
   return rows;
 };
@@ -28,7 +31,7 @@ export const findAll = async () => {
 // Get an story by Id
 export const findById = async (storyId) => {
   const [rows] = await pool.query(
-    "SELECT s.*,u.username,u.profile_image FROM stories s JOIN users u ON s.user_id = u.id WHERE s.id = ?",
+    "SELECT s.*,u.username,u.profile_image FROM stories s JOIN users u ON s.user_id = u.id WHERE s.id = ?  AND s.expires_at <= NOW()",
     [storyId],
   );
   return rows[0];
