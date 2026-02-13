@@ -40,3 +40,11 @@ export const markReadAll = async (userId) => {
   );
   return result.affectedRows;
 };
+
+// Get a notification by Id
+export const findById = async (notificationId) => {
+  const [rows] = await pool.query("SELECT * FROM notifications WHERE id = ?", [
+    notificationId,
+  ]);
+  return rows;
+};
