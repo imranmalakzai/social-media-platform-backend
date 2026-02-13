@@ -22,3 +22,12 @@ export const findAll = async (user_id) => {
   );
   return rows;
 };
+
+// Mark Read a notification
+export const markRead = async (notificationId) => {
+  const [result] = await pool.query(
+    "UPDATE notifications SET is_read = '0' WHERE id = ?",
+    [notificationId],
+  );
+  return result.affectedRows;
+};
