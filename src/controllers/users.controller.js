@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import * as userDb from "../repository/users.repository.js";
 import ApiError from "../utils/ApiError.js";
@@ -15,4 +16,32 @@ export const register = asyncHandler(async (req, res) => {
   if (result === 0) throw new ApiError("Internal server error", 500);
 
   res.status(201).json({ message: "Registration successed" });
+});
+
+// login as an existing account
+export const login = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  // use exist
+  const user = await userDb.findByEmail(email);
+  if (!user) throw new ApiError("Invalid cridential", 400);
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) throw new ApiError("Invalid cridential", 400);
+
+  // genereate tokens
+  const accessToken = generate.accessToken(user);
+  const refreshToken = generate.refreshToken(user);
+
+  // options
+  const options = {
+    httpOnly: true,
+    secure: true,
+    maxAge: 7 * 60 * 60 * 1000,
+  };
+
+  res
+    .status(200)
+    .cookie("refreshToken", refreshToken, options)
+    .json({ accessToken, user });
 });
