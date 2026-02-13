@@ -8,3 +8,12 @@ export const create = async (archive) => {
   );
   return result.insertId;
 };
+
+// Delete a saved post
+export const remove = async (postId) => {
+  const [result] = await pool.query(
+    "DELETE * FROM saved_posts WHERE post_id = ?",
+    [postId],
+  );
+  return result.affectedRows;
+};
