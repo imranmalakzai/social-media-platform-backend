@@ -35,3 +35,12 @@ export const findAllFollowing = async (userId) => {
   );
   return rows;
 };
+
+// Get a followed user
+export const findFollowedUser = async (follower_id, following_id) => {
+  const [rows] = await pool.query(
+    "SELECT id from follows WHERE follower_id = ? AND following_id = ?",
+    [follower_id, following_id],
+  );
+  return rows[0];
+};
