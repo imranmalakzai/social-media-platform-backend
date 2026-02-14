@@ -58,7 +58,7 @@ export const getUserFollowing = asyncHandler(async (req, res) => {
   if (!user) throw new ApiError("user not exist", 404);
 
   // user following
-  const users = await followDb.findAllFollowing(req.user.id);
+  const users = await followDb.findAllFollowing(userId);
 
   res.status(200).json({ following: users || [] });
 });
