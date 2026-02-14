@@ -18,7 +18,6 @@ export const follow = asyncHandler(async (req, res) => {
 });
 
 // Unfollow a user
-
 export const unfollow = asyncHandler(async (req, res) => {
   const { userId } = req.params;
 
@@ -35,4 +34,17 @@ export const unfollow = asyncHandler(async (req, res) => {
   if (result === 0) throw new ApiError("Internal server error", 500);
 
   res.status(200).json({ message: "unfollowed successfully" });
+});
+
+// Get user Followers
+export const getUserFollowers = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+
+  // user exist
+  const user = await userDb.findById(userId);
+  if (!user) throw new ApiError("user not exist", 404);
+
+  // Get user followers
+  const followers = await followDb.findAllFollowers(userId);
+  res.status(200).json({ followers: followers || [] });
 });

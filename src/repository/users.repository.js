@@ -18,7 +18,7 @@ export const remove = async (userId) => {
 
 // Get a user by id
 export const findById = async (userId) => {
-  const [rows] = await pool.query("SELECT * users WHERE id = ?", [userId]);
+  const [rows] = await pool.query("SELECT id users WHERE id = ?", [userId]);
   return rows[0];
 };
 
