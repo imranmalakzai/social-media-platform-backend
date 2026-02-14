@@ -1,8 +1,10 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import * as userDb from "../repository/users.repository.js";
 import ApiError from "../utils/ApiError.js";
 import * as generate from "../utils/jwt.js";
+import * as env from "../config/env.config.js";
 
 // Register a user
 export const register = asyncHandler(async (req, res) => {
@@ -44,4 +46,24 @@ export const login = asyncHandler(async (req, res) => {
     .status(200)
     .cookie("refreshToken", refreshToken, options)
     .json({ accessToken, user });
+});
+
+// Refresh access Token
+export const getRefreshAcessToken = asyncHandler(async (req, res) => {
+  const refreshToken = await req.cookies.refreshToken;
+
+  // check in db for token
+  const token = await userDb.findByToken(refreshToken);
+  const user = jwt.verify(token, env.JWT_REFRESH_TOKEN_SECRET);
+
+  // comparete token
+  if (!refreshToken || !token || !user || user.id !== token.id) {
+    throw new ApiError("Invalid Token", 401);
+  }
+
+  // Accesstoken
+  const accesstoken = await generate.accessToken(user);
+  if (!accesstoken) throw new ApiError("Internal server error", 500);
+
+  res.status(200).json({ accesstoken });
 });
