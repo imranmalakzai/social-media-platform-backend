@@ -67,3 +67,18 @@ export const getRefreshAcessToken = asyncHandler(async (req, res) => {
 
   res.status(200).json({ accesstoken });
 });
+
+// Get a user by id
+export const getUserById = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+
+  //find user
+  const user = await userDb.findById(userId);
+  if (!user) throw new ApiError("user not exist", 404);
+
+  const { id, username, profile_image, background_image } = user;
+
+  res
+    .status(200)
+    .json({ user: { id, username, profile_image, background_image, email } });
+});
