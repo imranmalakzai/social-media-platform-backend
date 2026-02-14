@@ -48,3 +48,17 @@ export const getUserFollowers = asyncHandler(async (req, res) => {
   const followers = await followDb.findAllFollowers(userId);
   res.status(200).json({ followers: followers || [] });
 });
+
+// Get  user accounts this user following
+export const getUserFollowing = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+
+  // user exist
+  const user = await userDb.findById(userId);
+  if (!user) throw new ApiError("user not exist", 404);
+
+  // user following
+  const users = await followDb.findAllFollowing(req.user.id);
+
+  res.status(200).json({ following: users || [] });
+});
