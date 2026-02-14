@@ -17,3 +17,12 @@ export const remove = async (user_id, post_id) => {
   );
   return result.affectedRows;
 };
+
+// Get a liked post
+export const findById = async (user_id, post_id) => {
+  const [rows] = await pool.query(
+    "SELECT id FROM likes WHERE user_id = ? AND post_id = ?",
+    [user_id, post_id],
+  );
+  return rows[0];
+};
