@@ -16,3 +16,23 @@ export const follow = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "Followed successfullyss" });
 });
+
+// Unfollow a user
+
+export const unfollow = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+
+  // user Exist
+  const user = await userDb.findById(userId);
+  if (!user) throw new ApiError("user not exist", 404);
+
+  //is following
+  const isFollowing = await followDb.findFollowedUser(req.user.id, userId);
+  if (!isFollowing) throw new ApiError("please follow first", 400);
+
+  // unfollow
+  const result = await followDb.remove(req.user.id, userId);
+  if (result === 0) throw new ApiError("Internal server error", 500);
+
+  res.status(200).json({ message: "unfollowed successfully" });
+});
