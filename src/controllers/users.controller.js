@@ -99,3 +99,9 @@ export const getUserById = asyncHandler(async (req, res) => {
     .status(200)
     .json({ user: { id, username, profile_image, background_image, email } });
 });
+
+// Get all users
+export const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await userDb.find();
+  res.status(200).json(users);
+});
