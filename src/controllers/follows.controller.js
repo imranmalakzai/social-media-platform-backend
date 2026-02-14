@@ -62,3 +62,9 @@ export const getUserFollowing = asyncHandler(async (req, res) => {
 
   res.status(200).json({ following: users || [] });
 });
+
+// My followers
+export const getMyFollowers = asyncHandler(async (req, res) => {
+  const followers = await followDb.findAllFollowers(req.user.id);
+  res.status(200).json({ followers: followers || [] });
+});
