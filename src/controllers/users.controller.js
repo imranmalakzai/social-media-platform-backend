@@ -100,6 +100,13 @@ export const getUserById = asyncHandler(async (req, res) => {
     .json({ user: { id, username, profile_image, background_image, email } });
 });
 
+// Delete Account
+export const removeAccount = asyncHandler(async (req, res) => {
+  const result = await userDb.remove(req.user.id);
+  if (result === 0) throw new ApiError("unable to delete account", 500);
+  res.status(200).json({ message: "Account deleted successfully" });
+});
+
 // Get all users
 export const getAllUsers = asyncHandler(async (req, res) => {
   const users = await userDb.find();
