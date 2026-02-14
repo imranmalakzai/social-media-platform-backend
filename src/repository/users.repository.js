@@ -1,4 +1,5 @@
 import { pool } from "../config/db.config.js";
+import { refreshToken } from "../utils/jwt.js";
 
 // create new user
 export const create = async (user) => {
@@ -70,4 +71,13 @@ export const updateCoverImage = async (coverImage, userId) => {
     [coverImage, userId],
   );
   return result.affectedRows;
+};
+
+// Get a user by token
+export const findByToken = async (token) => {
+  const [rows] = await pool.query(
+    "SELECT id FROM users WHERE refresh_token = ?",
+    [refreshToken],
+  );
+  return rows[0];
 };
