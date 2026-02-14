@@ -48,6 +48,23 @@ export const login = asyncHandler(async (req, res) => {
     .json({ accessToken, user });
 });
 
+// logout
+export const logout = asyncHandler(async (req, res) => {
+  const refreshToken = await req.cookies.refreshToken;
+  await userDb.updateToken(refreshToken);
+  // options
+  const options = {
+    httpOnly: true,
+    secure: true,
+    maxAge: 7 * 60 * 60 * 1000,
+  };
+
+  res
+    .status(200)
+    .clearCookie("refreshToken", options)
+    .json({ message: "logout successfully" });
+});
+
 // Refresh access Token
 export const getRefreshAcessToken = asyncHandler(async (req, res) => {
   const refreshToken = await req.cookies.refreshToken;
