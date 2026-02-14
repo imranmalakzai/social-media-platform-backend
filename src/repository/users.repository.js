@@ -77,7 +77,16 @@ export const updateCoverImage = async (coverImage, userId) => {
 export const findByToken = async (token) => {
   const [rows] = await pool.query(
     "SELECT id FROM users WHERE refresh_token = ?",
-    [refreshToken],
+    [token],
   );
   return rows[0];
+};
+
+// update user delete token
+export const updateToken = async (token) => {
+  const [result] = await pool.query(
+    "UPDATE users SET refresh_token = null WHERE refresh_token = ?",
+    [token],
+  );
+  return result.affectedRows;
 };
