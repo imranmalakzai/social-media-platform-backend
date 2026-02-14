@@ -27,3 +27,16 @@ export const like = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "post liked successfully" });
 });
+
+// liked post users
+export const getUserLikedPost = asyncHandler(async (req, res) => {
+  const { postId } = req.params;
+
+  //post exist
+  const post = await postDb.findById(postId);
+  if (!post) throw new ApiError("post not exist", 404);
+
+  // users
+  const users = await likeDb.findAllUsers(postId);
+  res.status(200).json({ users: users || [] });
+});
