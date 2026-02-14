@@ -26,3 +26,12 @@ export const findById = async (user_id, post_id) => {
   );
   return rows[0];
 };
+
+// Get All users liked a post
+export const findAllUsers = async (postId) => {
+  const [rows] = await pool.query(
+    "SELECT l.*,u.username,u.profile_image FROM likes l JOIN users u ON u.id = l.user_id WHERE l.post_id = ?",
+    [postId],
+  );
+  return rows;
+};
