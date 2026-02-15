@@ -41,10 +41,10 @@ export const findById = async (postId) => {
   return rows[0];
 };
 
-// Get all posts
+// Get all posts where visibility is public
 export const findAll = async () => {
   const [rows] = await pool.query(
-    "SELECT p.*,u.profile_image,u.username as author FROM posts p JOIN users u ON p.user_id = u.id",
+    "SELECT p.*,u.profile_image,u.username as author FROM posts p JOIN users u ON p.user_id = u.id AND p.visibility = 'public'",
   );
   return rows;
 };
