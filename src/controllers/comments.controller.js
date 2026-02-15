@@ -43,3 +43,22 @@ export const updateComment = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "comment updated successfully" });
 });
+
+// Delete comment
+export const deleteComment = asyncHandler(async (req, res) => {
+  const { commentId } = req.params;
+
+  // comment exist
+  const comment = await commentDb.findById(commentId);
+  const owner = req.user.id.toString() === comment.id.toString();
+
+  if (!comment || !owner) {
+    throw new ApiError("Invalid request", 400);
+  }
+
+  // result
+  const result = await commentDb.remove(commentId);
+  if (!result) throw new ApiError("Interal server error", 500);
+
+  res.status(200).json({ message: "Comment deleted successfully" });
+});
