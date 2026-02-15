@@ -106,3 +106,8 @@ export const updatePostVisibility = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "visibility updated successfully" });
 });
+
+export const getPublicPosts = asyncHandler(async (req, res) => {
+  const posts = await postDb.findAll();
+  res.status(200).json({ posts: posts || [] });
+});
