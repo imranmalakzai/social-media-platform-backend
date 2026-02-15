@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
 
 import * as postDb from "../repository/posts.repository.js";
+import * as userDb from "../repository/users.repository.js";
 import * as hashtagDb from "../repository/hashtags.repository.js";
 import * as postHashtagDb from "../repository/postHashtags.repository.js";
 
@@ -110,5 +111,17 @@ export const updatePostVisibility = asyncHandler(async (req, res) => {
 // Get all public posts
 export const getPublicPosts = asyncHandler(async (req, res) => {
   const posts = await postDb.findAll();
+  res.status(200).json({ posts: posts || [] });
+});
+
+// Get a user public posts
+export const getUserPosts = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+
+  //user exist
+  const user = await userDb.findById(userId);
+  if (!user) throw new ApiError("user not exist", 404);
+
+  const posts = await postDb.findUserPosts(userId);
   res.status(200).json({ posts: posts || [] });
 });
