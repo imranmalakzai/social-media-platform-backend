@@ -96,3 +96,13 @@ export const deletePost = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "post delete successfully" });
 });
+
+// update post visibility
+export const updatePostVisibility = asyncHandler(async (req, res) => {
+  const { visibility } = req.body;
+
+  const result = await postDb.changeVisibility(visibility);
+  if (result === 0) throw new ApiError("Interal server error", 500);
+
+  res.status(200).json({ message: "visibility updated successfully" });
+});
