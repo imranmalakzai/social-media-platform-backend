@@ -62,3 +62,16 @@ export const deleteComment = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "Comment deleted successfully" });
 });
+
+// Get all comments of posts
+export const postComments = asyncHandler(async (req, res) => {
+  const { postId } = req.params;
+
+  //post exist
+  const post = await postDb.findById(postId);
+  if (!post) throw new ApiError("post not exist", 404);
+
+  //post comments
+  const comments = await commentDb.postComments(postId);
+  res.status(200).json({ comments: comments || [] });
+});
