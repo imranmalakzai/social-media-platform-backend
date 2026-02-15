@@ -77,3 +77,22 @@ export const updatePost = asyncHandler(async (req, res) => {
   if (update === 0) throw new ApiError("Internal server error", 500);
   res.status(200).json({ message: "post updated succesflly" });
 });
+
+// delete post
+export const deletePost = asyncHandler(async (req, res) => {
+  const { postId } = req.params;
+
+  // post exist
+  const post = postDb.findById(postId);
+  if (!post) throw new ApiError("post not exist", 404);
+
+  // is owner
+  const owner = req.user.id.toString() === post.user_id.toString();
+  if (!owner) throw new ApiError("Access denied", 403);
+
+  // result
+  const result = await postDb.remove(postId);
+  if (result === 0) throw new ApiError("Internal server error", 500);
+
+  res.status(200).json({ message: "post delete successfully" });
+});
