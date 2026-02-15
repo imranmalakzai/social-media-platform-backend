@@ -125,3 +125,9 @@ export const getUserPosts = asyncHandler(async (req, res) => {
   const posts = await postDb.findUserPosts(userId);
   res.status(200).json({ posts: posts || [] });
 });
+
+// Get my posts
+export const getMyPosts = asyncHandler(async (req, res) => {
+  const posts = await postDb.findMyPosts(req.user.id);
+  res.status(200).json({ posts: posts || [] });
+});
