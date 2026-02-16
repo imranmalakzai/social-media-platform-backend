@@ -44,3 +44,12 @@ export const findFollowedUser = async (follower_id, following_id) => {
   );
   return rows[0];
 };
+
+// Get followers batch
+export const getFollowersBatch = async (userId, limit, offset) => {
+  const [rows] = await pool.query(
+    "SELECT follower_id FROM followers WHERE following_id = ? LIMIT = ? OFFSET = ?",
+    [userId, limit, offset],
+  );
+  return rows;
+};
