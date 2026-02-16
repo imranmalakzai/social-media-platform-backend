@@ -29,3 +29,9 @@ export const deleteStory = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "story removed successfully" });
 });
+
+// Get all stories
+export const getAllStories = asyncHandler(async (req, res) => {
+  const stories = await storyDb.findAll();
+  res.status(200).json({ stories: stories || [] });
+});
