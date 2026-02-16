@@ -1,4 +1,5 @@
 import * as notificationDb from "../repository/notifications.repository.js";
+import { logger } from "../config/logger.config.js";
 import { eventBus } from "../events/eventBus.js";
 
 eventBus.on("user.followed", async ({ followerId, followingId }) => {
@@ -10,6 +11,11 @@ eventBus.on("user.followed", async ({ followerId, followingId }) => {
       post_id: null,
     });
   } catch (error) {
-    console.log("error in user follower listener", error);
+    logger.error("Notification creation failed", {
+      followerId,
+      followingId,
+      error: error.message,
+      stack: error.stack,
+    });
   }
 });
