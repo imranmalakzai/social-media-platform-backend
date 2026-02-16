@@ -35,3 +35,14 @@ export const getAllStories = asyncHandler(async (req, res) => {
   const stories = await storyDb.findAll();
   res.status(200).json({ stories: stories || [] });
 });
+
+// Get a story by id
+export const getStoryById = asyncHandler(async (req, res) => {
+  const { storyId } = req.params;
+
+  // story exist
+  const story = await storyDb.findAll(storyId);
+  if (!story) throw new ApiError("story not exist");
+
+  res.status(200).json({ story: story || [] });
+});
