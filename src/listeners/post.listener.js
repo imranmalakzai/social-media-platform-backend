@@ -1,7 +1,7 @@
 import { eventBus } from "../events/eventBus.js";
 import * as followersDb from "../repository/followers.repository.js";
 import * as notificationsDb from "../repository/notifications.repository.js";
-import ApiError from "../utils/ApiError.js";
+import { logger } from "../config/logger.config.js";
 
 eventBus.on("post.created", async ({ userId, postId }) => {
   try {
@@ -26,6 +26,11 @@ eventBus.on("post.created", async ({ userId, postId }) => {
       await notificationsDb.bulkInsert(values);
     }
   } catch (error) {
-    console.log("Error inside the post created notification error");
+    logger.error("error in added new post notification", {
+      userId,
+      postId,
+      error: error.message,
+      stack: error.stack,
+    });
   }
 });
