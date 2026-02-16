@@ -43,3 +43,13 @@ export const getSavedPosts = asyncHandler(async (req, res) => {
   const posts = archiveDb.findAll(req.user.id);
   res.status(200).json({ posts: posts || [] });
 });
+
+// Get a saved post by Id
+export const getSavedPostById = asyncHandler(async (req, res) => {
+  const { postId } = req.params;
+
+  const post = await archiveDb.findById(postId, req.user.id);
+  if (!post) throw new ApiError("post not exist", 404);
+
+  res.status(200).json({ post });
+});
