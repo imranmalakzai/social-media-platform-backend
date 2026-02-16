@@ -75,3 +75,12 @@ export const findMypostById = async (userId, postId) => {
   );
   return rows[0];
 };
+
+// Get a public post by id
+export const findUserPostById = async (userId, postId) => {
+  const [rows] = await pool.query(
+    "SELECT p.*,u.profile_image,u.username as author FROM posts p JOIN users u ON p.user_id = u.id  WHERE p.user_id = ? AND p.id = ? AND p.visibility = 'public'",
+    [userId, postId],
+  );
+  return rows[0];
+};
