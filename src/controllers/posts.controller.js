@@ -133,7 +133,7 @@ export const getMyPosts = asyncHandler(async (req, res) => {
 });
 
 // Get a user post by id
-export const fetAPostById = asyncHandler(async (req, res) => {
+export const getAPostById = asyncHandler(async (req, res) => {
   const { postId } = req.params;
 
   // find post
