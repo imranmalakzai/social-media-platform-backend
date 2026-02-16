@@ -48,3 +48,12 @@ export const findById = async (notificationId) => {
   ]);
   return rows;
 };
+
+// Buld Insert => Insert many rows at onece
+export const bulkInsert = async (values) => {
+  const [result] = await pool.query(
+    "INSERT INTO notifications (recipient_id,sender_id,type,post_id) VALUES = ?",
+    [values],
+  );
+  return result.affectedRows;
+};
