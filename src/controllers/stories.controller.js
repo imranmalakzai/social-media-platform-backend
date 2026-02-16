@@ -12,3 +12,20 @@ export const createStory = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "published" });
 });
+
+// delete one story
+export const deleteStory = asyncHandler(async (req, res) => {
+  const { storyId } = req.story;
+
+  // story exist
+  const story = await storyDb.findById(storyId);
+  const owner = req.user.id.toString() === story.user_id;
+
+  if (!story || !owner) throw new ApiError("Invalid request", 400);
+
+  // delete story
+  const result = await storyDb.remove(storyId);
+  if (result === 0) throw new ApiError("Internal server error", 500);
+
+  res.status(200).json({ message: "story removed successfully" });
+});
