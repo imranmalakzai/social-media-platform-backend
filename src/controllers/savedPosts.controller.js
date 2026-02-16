@@ -22,3 +22,18 @@ export const savePosts = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "Post Saved successfully" });
 });
+
+// Delete a saved post
+export const deleteSavePost = asyncHandler(async (req, res) => {
+  const { postId } = req.params;
+
+  // post exist
+  const savedPost = archiveDb.findById(postId, req.user.id);
+  if (!savedPost) throw new ApiError("saved post not exist", 404);
+
+  // delete
+  const result = await archiveDb.remove(postId);
+  if (result === 0) throw new ApiError("Interal server error", 500);
+
+  res.status(200).json({ message: "saved post removed" });
+});
