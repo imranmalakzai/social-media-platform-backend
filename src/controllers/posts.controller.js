@@ -5,6 +5,7 @@ import * as postDb from "../repository/posts.repository.js";
 import * as userDb from "../repository/users.repository.js";
 import * as hashtagDb from "../repository/hashtags.repository.js";
 import * as postHashtagDb from "../repository/postHashtags.repository.js";
+import { eventBus } from "../events/eventBus.js";
 
 // Create a new post
 export const createPost = asyncHandler(async (req, res) => {
@@ -35,6 +36,14 @@ export const createPost = asyncHandler(async (req, res) => {
     await postHashtagDb.create({
       post_id: post,
       hashtag_id: hashtagRecord.id,
+    });
+
+    // emit event for notification handling
+    setImmediate(() => {
+      eventBus.emit("post.created", {
+        userId: req.user.id,
+        postId: post,
+      });
     });
   }
 
