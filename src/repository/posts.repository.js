@@ -66,3 +66,12 @@ export const findMyPosts = async (userId) => {
   );
   return rows;
 };
+
+// Get one of my post by id
+export const findMypostById = async (userId, postId) => {
+  const [rows] = await pool.query(
+    "SELECT p.*,u.profile_image,u.username as author FROM posts p JOIN users u ON p.user_id = u.id  WHERE p.user_id = ? AND p.id = ?",
+    [userId, postId],
+  );
+  return rows[0];
+};
