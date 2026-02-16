@@ -1,6 +1,6 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
-import * as userDb from "../repository/users.repository.js";
+import { eventBus } from "../events/eventBus.js";
 import * as likeDb from "../repository/likes.repository.js";
 import * as postDb from "../repository/posts.repository.js";
 
@@ -24,6 +24,14 @@ export const like = asyncHandler(async (req, res) => {
   // Add reaction
   const result = await likeDb.create(req.user.id, postId);
   if (result === 0) throw new ApiError("Internal server error", 500);
+
+  setInterval(() => {
+    eventBus.emit("post.liked", {
+      postId,
+      sender_id: req.user.id,
+      reciver_id: post.user_id,
+    });
+  });
 
   res.status(200).json({ message: "post liked successfully" });
 });
