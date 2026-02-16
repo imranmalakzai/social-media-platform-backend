@@ -28,9 +28,10 @@ export const findAll = async (user_id) => {
 };
 
 // Get a saved post by id
-export const findById = async (savedPostId) => {
-  const [rows] = await pool.query("SELECT * FROM saved_posts WHERE id = ?", [
-    savedPostId,
-  ]);
+export const findById = async (savedPostId, userId) => {
+  const [rows] = await pool.query(
+    "SELECT * FROM saved_posts WHERE id = ? AND user_id = ?",
+    [savedPostId, userId],
+  );
   return rows[0];
 };
