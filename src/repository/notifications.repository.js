@@ -3,7 +3,7 @@ import { pool } from "../config/db.config.js";
 // create Notifications
 export const create = async (notification) => {
   const [result] = await pool.query(
-    "INSERT INTO notifications (recipient_id,sender_id,type,post_id) VALUES (?,?,?,?)",
+    "INSERT INTO notifications (recipient_id,sender_id,type,post_id) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE created_at = NOW();",
     [
       notification.recipient_id,
       notification.sender_id,
@@ -52,7 +52,7 @@ export const findById = async (notificationId) => {
 // Buld Insert => Insert many rows at onece
 export const bulkInsert = async (values) => {
   const [result] = await pool.query(
-    "INSERT INTO notifications (recipient_id,sender_id,type,post_id) VALUES = ?",
+    "INSERT INTO notifications (recipient_id,sender_id,type,post_id) VALUES ? ON DUPLICATE KEY UPDATE created_at = NOW()",
     [values],
   );
   return result.affectedRows;
