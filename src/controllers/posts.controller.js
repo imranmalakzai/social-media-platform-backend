@@ -131,3 +131,14 @@ export const getMyPosts = asyncHandler(async (req, res) => {
   const posts = await postDb.findMyPosts(req.user.id);
   res.status(200).json({ posts: posts || [] });
 });
+
+// Get a post by id
+export const fetAPostById = asyncHandler(async (req, res) => {
+  const { postId } = req.params;
+
+  // find post
+  const post = await postDb.findUserPostById(postId);
+  if (!post) throw new ApiError("post not exist", 404);
+
+  res.status(200).json({ post });
+});
