@@ -1,4 +1,5 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { eventBus } from "../events/eventBus.js";
 import * as userDb from "../repository/users.repository.js";
 import * as followDb from "../repository/followers.repository.js";
 import ApiError from "../utils/ApiError.js";
@@ -13,6 +14,13 @@ export const follow = asyncHandler(async (req, res) => {
 
   const following = await followDb.findFollowedUser(req.user.id, userId);
   if (!following) await followDb.create(req.user.id, userId);
+
+  setImmediate(() => {
+    eventBus.emit("user.followed", {
+      followerId: req.user.id,
+      followingId: userId,
+    });
+  });
 
   res.status(200).json({ message: "Followed successfullyss" });
 });
