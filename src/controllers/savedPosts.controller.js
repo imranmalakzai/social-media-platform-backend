@@ -37,3 +37,9 @@ export const deleteSavePost = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "saved post removed" });
 });
+
+// Get all saved posts
+export const getSavedPosts = asyncHandler(async (req, res) => {
+  const posts = archiveDb.findAll(req.user.id);
+  res.status(200).json({ posts: posts || [] });
+});
