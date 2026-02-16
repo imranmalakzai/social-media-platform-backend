@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import * as postDb from "../repository/posts.repository.js";
 import * as commentDb from "../repository/comments.repository.js";
 import ApiError from "../utils/ApiError.js";
+import { eventBus } from "../events/eventBus.js";
 
 // Create comment
 export const createComment = asyncHandler(async (req, res) => {
@@ -21,6 +22,16 @@ export const createComment = asyncHandler(async (req, res) => {
   });
 
   if (comment === 0) throw new ApiError("Internal server error", 500);
+
+  setImmediate(() => {
+    eventBus.emit({
+      type: "COMMENT",
+      sender_id: req.user.id,
+      resiver_id: post.user_id,
+      post_id: post.id,
+    });
+  });
+
   res.status(201).json({ message: "comment added" });
 });
 
