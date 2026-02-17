@@ -20,3 +20,13 @@ export const create = async (userId, otpHash, type) => {
 
   return result.insertId;
 };
+
+// Find a valid otp
+export const findValidOtp = async (userId, type) => {
+  const [rows] = await pool.query(
+    `SELECT * FROM otps
+     WHERE user_id = ? AND type = ? AND consumed_at IS NULL AND expires_at > NOW()`,
+    [userId, type],
+  );
+  return rows[0];
+};
