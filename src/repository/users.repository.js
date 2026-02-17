@@ -82,6 +82,15 @@ export const findByToken = async (token) => {
   return rows[0];
 };
 
+// Mark user verified
+export const verifyUser = async (userId) => {
+  const [result] = await pool.query(
+    "UPDATE users SET is_verified = '1' WHERE id = ?",
+    [userId],
+  );
+  return result.affectedRows;
+};
+
 // update user delete token
 export const updateToken = async (token) => {
   const [result] = await pool.query(
