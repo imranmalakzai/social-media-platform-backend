@@ -19,7 +19,7 @@ export const register = asyncHandler(async (req, res) => {
   if (result === 0) throw new ApiError("Internal server error", 500);
 
   setImmediate(() => {
-    eventBus.evmit("USER.REGISTERED", { user_id: result });
+    eventBus.evmit("USER.REGISTERED", { user_id: result, email });
   });
 
   res.status(201).json({ message: "Account create . opt sent to your email" });
