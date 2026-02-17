@@ -5,6 +5,7 @@ import * as userDb from "../repository/users.repository.js";
 import ApiError from "../utils/ApiError.js";
 import * as generate from "../utils/jwt.js";
 import * as env from "../config/env.config.js";
+import { eventBus } from "../events/eventBus.js";
 
 // Register a user
 export const register = asyncHandler(async (req, res) => {
@@ -17,7 +18,11 @@ export const register = asyncHandler(async (req, res) => {
   const result = await userDb.create({ username, email, password });
   if (result === 0) throw new ApiError("Internal server error", 500);
 
-  res.status(201).json({ message: "Registration successed" });
+  setImmediate(() => {
+    eventBus.evmit("USER.REGISTERED", { user_id: result });
+  });
+
+  res.status(201).json({ message: "Account create . opt sent to your email" });
 });
 
 // login as an existing account
