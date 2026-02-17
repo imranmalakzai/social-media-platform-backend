@@ -30,3 +30,12 @@ export const findValidOtp = async (userId, type) => {
   );
   return rows[0];
 };
+
+export const consumeOtp = async (otpId) => {
+  await pool.query(
+    `UPDATE otps
+     SET consumed_at = NOW()
+     WHERE id = ?`,
+    [otpId],
+  );
+};
