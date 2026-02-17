@@ -14,13 +14,8 @@ export const create = async (userId, otpHash, type) => {
   // Insert new OTP
   const [result] = await pool.query(
     `INSERT INTO otps (user_id, otp_hash, type, expires_at) 
-     VALUES (?, ?, ?, ?)`,
-    [
-      userId,
-      otpHash,
-      type,
-      new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
-    ],
+     VALUES (?, ?, ?,DATE_ADD(NOW(), INTERVAL 10 MINUTE))`,
+    [userId, otpHash, type],
   );
 
   return result.insertId;
