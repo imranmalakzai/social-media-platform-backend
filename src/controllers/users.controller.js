@@ -1,10 +1,12 @@
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import * as userDb from "../repository/users.repository.js";
 import ApiError from "../utils/ApiError.js";
 import * as generate from "../utils/jwt.js";
 import * as env from "../config/env.config.js";
+import * as otpDb from "../repository/opt.repository.js";
 import { eventBus } from "../events/eventBus.js";
 
 // Register a user
@@ -23,6 +25,30 @@ export const register = asyncHandler(async (req, res) => {
   });
 
   res.status(201).json({ message: "Account create . opt sent to your email" });
+});
+
+// Verify email
+export const verifyEmail = asyncHandler(async (req, res) => {
+  const { otp, email } = req.body;
+
+  // find user
+  const user = await userDb.findByEmail(email);
+  if (!user) throw new ApiError("user not exist", 404);
+
+  //  Hash OTP
+  const otpHash = crypto.createHash("sha256").update(otp).digest("hex");
+
+  //is valid otp
+  const isValid = await otpDb.findValidOtp(user.id, "VERIFY_EMAIL");
+
+  if (!isValid || otpHash !== isValid.otp_hash) {
+    throw new ApiError("Invalid or opt is expired", 400);
+  }
+
+  await otpDb.consumeOtp(isValid.id);
+  await userDb.verifyUser(user.id);
+
+  res.status(200).json({ message: "Email Verified" });
 });
 
 // login as an existing account
