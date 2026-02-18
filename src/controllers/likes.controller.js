@@ -25,7 +25,7 @@ export const like = asyncHandler(async (req, res) => {
   const result = await likeDb.create(req.user.id, postId);
   if (result === 0) throw new ApiError("Internal server error", 500);
 
-  setInterval(() => {
+  setImmediate(() => {
     eventBus.emit("post.liked", {
       postId,
       sender_id: req.user.id,
