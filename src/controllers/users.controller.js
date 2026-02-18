@@ -51,6 +51,25 @@ export const verifyEmail = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Email Verified" });
 });
 
+// Reset Password
+export const forgetPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  // user exist
+  const user = userDb.findByEmail(email);
+  if (!user) throw new ApiError("user not exist", 404);
+
+  setImmediate(() => {
+    eventBus.emit("RESET.PASSWORD", {
+      userId: user.id,
+      email: user.email,
+    });
+  });
+  res
+    .status(200)
+    .json({ message: "opt send to your email check your email address" });
+});
+
 // login as an existing account
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
