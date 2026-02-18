@@ -39,3 +39,10 @@ export const consumeOtp = async (otpId) => {
     [otpId],
   );
 };
+
+export const deleteExpiredOtps = async () => {
+  await pool.query(
+    `DELETE FROM otps 
+     WHERE expires_at < NOW()`,
+  );
+};
