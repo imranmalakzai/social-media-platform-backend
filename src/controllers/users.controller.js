@@ -51,7 +51,7 @@ export const verifyEmail = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Email Verified" });
 });
 
-// Reset Password
+// Forget password
 export const forgetPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
