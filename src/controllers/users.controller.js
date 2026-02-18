@@ -67,7 +67,7 @@ export const forgetPassword = asyncHandler(async (req, res) => {
   });
   res
     .status(200)
-    .json({ message: "opt send to your email check your email address" });
+    .json({ message: "otp send to your email check your email address" });
 });
 
 // login as an existing account
