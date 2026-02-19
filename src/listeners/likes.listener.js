@@ -8,6 +8,7 @@ eventBus.on("post.liked", async ({ postId, sender_id, resiver_id }) => {
       post_id: postId,
       sender_id,
       resiver_id,
+      typ: "like",
     });
   } catch (error) {
     logger.error("Notification creation failed in like a post", {
