@@ -1,4 +1,5 @@
 import * as notificationsDb from "../repository/notifications.repository.js";
+import { sendNotification } from "../SSE/sseManager.js";
 import { eventBus } from "../events/eventBus.js";
 import { logger } from "../config/logger.config.js";
 
@@ -9,6 +10,12 @@ eventBus.on("post.liked", async ({ postId, sender_id, resiver_id }) => {
       sender_id,
       resiver_id,
       typ: "like",
+    });
+
+    sendNotification(resiver_id, {
+      type: "Like",
+      sender_id,
+      postId,
     });
   } catch (error) {
     logger.error("Notification creation failed in like a post", {
