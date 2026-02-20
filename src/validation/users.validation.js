@@ -11,3 +11,8 @@ export const register = z.object({
     .min(8, "password must be at least 8 characters"),
   email: z.string("Email is required").email("Invalid Email Address"),
 });
+
+export const login = z.object({
+  email: z.string("Email Address is Required").email("Invalid Email address"),
+  password: z.string().min(1, "password is required"),
+});
