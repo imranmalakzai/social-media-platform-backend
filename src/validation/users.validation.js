@@ -16,3 +16,11 @@ export const login = z.object({
   email: z.string("Email Address is Required").email("Invalid Email address"),
   password: z.string().min(1, "password is required"),
 });
+
+export const verifyEmail = z.object({
+  email: z.string("Email address is required").email("Invalid Email Address"),
+  otp: z
+    .string()
+    .length(6, "OTP must be exctly 6 digits")
+    .regex(/^\d+$/, "OTP must contain only numbers"),
+});
