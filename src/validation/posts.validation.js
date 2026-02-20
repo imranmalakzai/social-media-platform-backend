@@ -13,3 +13,7 @@ export const createPost = z.object({
 export const updatePost = z.object({
   caption: z.string("Caption is required"),
 });
+
+export const updatePostValidation = z.object({
+  visibility: z.enum(["public", "privite"]),
+});
