@@ -78,7 +78,11 @@ export const resetPassword = asyncHandler(async (req, res) => {
   const user = await userDb.findByEmail(email);
   if (!user) throw new ApiError("User not exist", 404);
 
-  const otpHash = crypto.createHash("sha256").update(otp).digest("hex");
+  const otpHash = crypto
+    .createHash("sha256")
+    .update(otp)
+    .digest("hex")
+    .toString();
   // valid otp
   const isValid = await otpDb.findValidOtp(user.id, "RESET.PASSWORD");
 
