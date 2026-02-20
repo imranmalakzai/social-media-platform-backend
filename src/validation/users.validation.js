@@ -24,3 +24,7 @@ export const verifyEmail = z.object({
     .length(6, "OTP must be exctly 6 digits")
     .regex(/^\d+$/, "OTP must contain only numbers"),
 });
+
+export const forgetPassword = z.object({
+  email: z.string("Email is required").email("Invalid Email address"),
+});
