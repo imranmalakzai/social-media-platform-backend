@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { email, z } from "zod";
 
 // Registeration
 export const register = z.object({
@@ -27,4 +27,15 @@ export const verifyEmail = z.object({
 
 export const forgetPassword = z.object({
   email: z.string("Email is required").email("Invalid Email address"),
+});
+
+export const resetPassword = z.object({
+  email: z.string("Email is required").email("Invalid Email address"),
+  otp: z
+    .string()
+    .length(6, "OTP must be exctly 6 digits")
+    .regex(/^\d+$/, "OTP must contain only numbers"),
+  password: z
+    .string("Password is required")
+    .min(8, "password must be at more then 8 characters"),
 });
