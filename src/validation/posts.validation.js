@@ -9,3 +9,7 @@ export const createPost = z.object({
     "visibilit should be public or privite",
   ),
 });
+
+export const updatePost = z.object({
+  caption: z.string("Caption is required"),
+});
