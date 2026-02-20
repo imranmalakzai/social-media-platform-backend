@@ -1,4 +1,5 @@
 import * as notificationDb from "../repository/notifications.repository.js";
+import { sendNotification } from "../SSE/sseManager.js";
 import { logger } from "../config/logger.config.js";
 import { eventBus } from "../events/eventBus.js";
 
@@ -9,6 +10,11 @@ eventBus.on("user.followed", async ({ followerId, followingId }) => {
       sender_id: followerId,
       type: "FOLLOW",
       post_id: null,
+    });
+    sendNotification(followingId, {
+      type: "FOLLOW",
+      followerId,
+      followingId,
     });
   } catch (error) {
     logger.error("Notification creation failed", {
