@@ -21,7 +21,9 @@ userRouter.route("/auth/logout").post(Users.logout);
 userRouter.route("/auth/refresh-token").post(Users.getRefreshAcessToken);
 
 // Verify-email
-userRouter.route("/auth/verify-email").post(Users.verifyEmail);
+userRouter
+  .route("/auth/verify-email")
+  .post(validate(Schema.verifyEmail), Users.verifyEmail);
 
 // Forgot-password
 userRouter.route("/auth/forgot-password").post(Users.forgetPassword);
