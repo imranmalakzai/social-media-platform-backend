@@ -26,7 +26,9 @@ userRouter
   .post(validate(Schema.verifyEmail), Users.verifyEmail);
 
 // Forgot-password
-userRouter.route("/auth/forgot-password").post(Users.forgetPassword);
+userRouter
+  .route("/auth/forgot-password")
+  .post(validate(Schema.forgetPassword), Users.forgetPassword);
 
 // Reset Password
 userRouter.route("/auth/reset-password").post(Users.resetPassword);
