@@ -193,3 +193,9 @@ export const getAllUsers = asyncHandler(async (req, res) => {
   const users = await userDb.find();
   res.status(200).json(users);
 });
+
+// Get loggen user
+export const getLoggenUser = asyncHandler(async (req, res) => {
+  const user = await userDb.findById(req.user.id);
+  res.status(200).json({ user });
+});
