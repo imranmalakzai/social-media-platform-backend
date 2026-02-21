@@ -199,3 +199,23 @@ export const getLoggenUser = asyncHandler(async (req, res) => {
   const user = await userDb.findById(req.user.id);
   res.status(200).json({ user });
 });
+
+// change password
+export const updatePassword = asyncHandler(async (req, res) => {
+  const { newPassword, oldPassword } = req.body;
+
+  const user = await userDb.findById(req.user.id);
+
+  if (oldPassword !== user.password) {
+    throw new ApiError("Invalid old password", 400);
+  }
+
+  // hash password
+  const password = await bcrypt.hash(newPassword, 10);
+
+  // update password
+  const result = await userDb.updatePassword(password, req.user.id);
+  if (result === 0) throw new ApiError("Interal server error", 500);
+
+  res.status(200).json({ message: "password updated succesfully" });
+});
