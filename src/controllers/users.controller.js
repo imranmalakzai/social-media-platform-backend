@@ -219,3 +219,13 @@ export const updatePassword = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "password updated succesfully" });
 });
+
+// update profile (username,bio)
+export const updateProfile = asyncHandler(async (req, res) => {
+  const { username, bio } = req.body;
+
+  const result = await userDb.updateProfile(username, bio, req.user.id);
+  if (result === 0) throw new ApiError("Internal server error", 500);
+
+  res.status(200).json({ message: "profile updated successfully" });
+});
