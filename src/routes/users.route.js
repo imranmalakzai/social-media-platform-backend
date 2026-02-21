@@ -4,7 +4,7 @@ import * as Schema from "../validation/users.validation.js";
 import { validate } from "../middleware/zod.middleware.js";
 import { auth } from "../middleware/auth.middleware.js";
 
-const userRouter = new express.Router();
+const userRouter = express.Router();
 
 // register
 userRouter.route("/auth/register").post(Users.register);

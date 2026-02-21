@@ -229,3 +229,16 @@ export const updateProfile = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "profile updated successfully" });
 });
+
+// change avatar
+export const updateAvatar = asyncHandler(async (req, res) => {
+  const avatar = req.file?.path;
+
+  if (!avatar) throw new ApiError("please select an image", 400);
+
+  // result
+  const result = await userDb.updateAvatar(avatar, req.user.id);
+  if (!result) throw new ApiError("Internal server error", 500);
+
+  res.status(200).json({ message: "avatar updated successfully" });
+});
