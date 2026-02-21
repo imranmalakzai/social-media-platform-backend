@@ -45,7 +45,9 @@ userRouter.route("/me").delete(Users.removeAccount);
 userRouter.route("/me/update-profile").patch(Users.updateProfile);
 
 // change password
-userRouter.route("/me/change-password").patch(Users.updatePassword);
+userRouter
+  .route("/me/change-password")
+  .patch(validate(Schema.changePassword), Users.updatePassword);
 
 // change avatar
 userRouter.route("/me/change-avatar").patch(Users.updateAvatar);
