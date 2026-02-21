@@ -26,3 +26,21 @@ userRouter.route("/auth/forgot-password").post(Users.forgetPassword);
 
 // Reset Password
 userRouter.route("/auth/reset-password").post(Users.resetPassword);
+
+// Get Current user
+userRouter.route("/me").get(Users.getLoggenUser);
+
+// delete account
+userRouter.route("/me").delete(Users.removeAccount);
+
+// update profile
+userRouter.route("/me/update-profile").patch(Users.updateProfile);
+
+// change password
+userRouter.route("/me/change-password").patch(Users.updatePassword);
+
+// change avatar
+userRouter.route("/me/change-avatar").patch(Users.updateAvatar);
+
+// change cover image image
+userRouter.route("/me/change-coverimage").patch(Users.updateCoverImage);
