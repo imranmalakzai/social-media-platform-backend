@@ -12,7 +12,7 @@ userRouter
   .post(validate(Schema.register), Users.register);
 
 // Login
-userRouter.route("/auth/login").post(Users.login);
+userRouter.route("/auth/login").post(validate(Schema.login), Users.login);
 
 // Logout
 userRouter.route("/auth/logout").post(Users.logout);
