@@ -39,3 +39,10 @@ export const resetPassword = z.object({
     .string("Password is required")
     .min(8, "password must be at more then 8 characters"),
 });
+
+export const changePassword = z.object({
+  oldPassword: z.string("old password is required").min(1),
+  newPassword: z
+    .string("new pasword is require")
+    .min(8, "new password must be at least 8 characters"),
+});
