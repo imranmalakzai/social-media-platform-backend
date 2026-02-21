@@ -7,7 +7,9 @@ import { auth } from "../middleware/auth.middleware.js";
 const userRouter = express.Router();
 
 // register
-userRouter.route("/auth/register").post(Users.register);
+userRouter
+  .route("/auth/register")
+  .post(validate(Schema.register), Users.register);
 
 // Login
 userRouter.route("/auth/login").post(Users.login);
