@@ -44,3 +44,9 @@ userRouter.route("/me/change-avatar").patch(Users.updateAvatar);
 
 // change cover image image
 userRouter.route("/me/change-coverimage").patch(Users.updateCoverImage);
+
+// Get all users
+userRouter.route("/users").get(Users.getAllUsers);
+
+// Get a user by id
+userRouter.route("/users/:userId").get(Users.getUserById);
