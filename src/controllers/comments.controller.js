@@ -57,7 +57,12 @@ export const updateComment = asyncHandler(async (req, res) => {
 
 // Delete comment
 export const deleteComment = asyncHandler(async (req, res) => {
+  const { postId } = req.params;
   const { commentId } = req.params;
+
+  //post exist
+  const post = await postDb.findById(postId);
+  if (!post) throw new ApiError("Post not exist", 404);
 
   // comment exist
   const comment = await commentDb.findById(commentId);
