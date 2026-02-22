@@ -21,6 +21,9 @@ postRouter.route("/users/:userId/posts").get(Posts.getUserPosts);
 // Get user post by Id
 postRouter.route("/users/:userId/posts/:postId").get(Posts.getUserPostById);
 
+// create a post
+postRouter.route("/me/posts").post(Posts.createPost);
+
 // Get My post
 postRouter.route("/me/posts").get(Posts.getMyPosts);
 
