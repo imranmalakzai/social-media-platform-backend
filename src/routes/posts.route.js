@@ -13,6 +13,8 @@ postRouter.route("/posts").get(Posts.getPublicPosts);
 // Get a post by Id
 postRouter.route("/posts/:postId").get(Posts.getAPostById);
 
+postRouter.use(auth);
+
 // Get user posts
 postRouter.route("/users/:userId/posts").get(Posts.getUserPosts);
 
