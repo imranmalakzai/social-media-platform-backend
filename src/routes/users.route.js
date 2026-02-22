@@ -35,6 +35,9 @@ userRouter
   .route("/auth/reset-password")
   .post(validate(Schema.resetPassword), Users.resetPassword);
 
+// handle auth
+userRouter.use(auth);
+
 // Get Current user
 userRouter.route("/me").get(Users.getLoggenUser);
 
