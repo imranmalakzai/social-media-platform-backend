@@ -33,7 +33,9 @@ postRouter.route("/me/posts").get(Posts.getMyPosts);
 postRouter.route("/me/posts/:postId").get(Posts.getMyPostById);
 
 // update a post
-postRouter.route("/me/posts/:postId").patch(Posts.updatePost);
+postRouter
+  .route("/me/posts/:postId")
+  .patch(validate(schema.updatePost), Posts.updatePost);
 
 // delete a post
 postRouter.route("/me/posts/:postId").patch(Posts.deletePost);
