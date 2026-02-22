@@ -6,6 +6,8 @@ import * as schema from "../validation/comments.valiation.js";
 
 const commentRouter = express.Router({ mergeParams: true });
 
+commentRouter.use(auth);
+
 // create comments
 commentRouter.route("/comments").post(comments.createComment);
 
