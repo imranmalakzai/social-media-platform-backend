@@ -26,7 +26,11 @@ userRouter.route("/auth/refresh-token").post(Users.getRefreshAcessToken);
 // Verify-email
 userRouter
   .route("/auth/verify-email")
-  .post(validate(Schema.verifyEmail), Users.verifyEmail);
+  .post(
+    validate(Schema.verifyEmail),
+    rateLimit.otpVerifyLimiter,
+    Users.verifyEmail,
+  );
 
 // Forgot-password
 userRouter
