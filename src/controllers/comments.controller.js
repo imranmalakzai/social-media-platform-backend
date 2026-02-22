@@ -37,11 +37,21 @@ export const createComment = asyncHandler(async (req, res) => {
 
 // update comment
 export const updateComment = asyncHandler(async (req, res) => {
+  const { postId } = req.params;
   const { commentId } = req.params;
   const { text } = req.body;
 
+  //post exist
+  const post = await postDb.findById(postId);
+  if (!post) throw new ApiError("user not exist", 404);
+
   // comment exist
   const comment = await commentDb.findById(commentId);
+
+  if (comment.post_id.toString() !== postId.toString()) {
+    throw new ApiError("Access denied", 400);
+  }
+
   const commentOwner = req.user.id.toString() === comment.id.toString();
 
   if (!comment || !commentOwner) {
