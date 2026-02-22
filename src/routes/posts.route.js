@@ -43,6 +43,6 @@ postRouter.route("/me/posts/:postId").patch(Posts.deletePost);
 // update post visibility
 postRouter
   .route("/me/posts/:postId/visibility")
-  .patch(Posts.updatePostVisibility);
+  .patch(validate(schema.updatePostVisibility), Posts.updatePostVisibility);
 
 export default postRouter;
