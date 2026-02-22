@@ -22,7 +22,9 @@ postRouter.route("/users/:userId/posts").get(Posts.getUserPosts);
 postRouter.route("/users/:userId/posts/:postId").get(Posts.getUserPostById);
 
 // create a post
-postRouter.route("/me/posts").post(Posts.createPost);
+postRouter
+  .route("/me/posts")
+  .post(validate(schema.createPost), Posts.createPost);
 
 // Get My post
 postRouter.route("/me/posts").get(Posts.getMyPosts);
