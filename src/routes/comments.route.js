@@ -21,7 +21,9 @@ commentRouter.route("/comments").get(comments.postComments);
 commentRouter.route("/comments/:commentId").get(comments.deleteComment);
 
 // Update a comment
-commentRouter.route("/comments/:commentId").patch(comments.updateComment);
+commentRouter
+  .route("/comments/:commentId")
+  .patch(validate(schema.updatePost), comments.updateComment);
 
 // Get a comment by Id
 commentRouter.route("/comments/:commentId").get(comments.getCommentById);
