@@ -11,21 +11,25 @@ commentRouter.use(auth);
 
 // create comments
 commentRouter
-  .route("/comments")
+  .route("/posts/:postId/comments")
   .post(validate(schema.createPost), comments.createComment);
 
 // Get all comments
-commentRouter.route("/comments").get(comments.postComments);
+commentRouter.route("/posts/:postId/comments").get(comments.postComments);
 
 // Delete a comment
-commentRouter.route("/comments/:commentId").get(comments.deleteComment);
+commentRouter
+  .route("/posts/:postId/comments/:commentId")
+  .get(comments.deleteComment);
 
 // Update a comment
 commentRouter
-  .route("/comments/:commentId")
+  .route("/posts/:postId/comments/:commentId")
   .patch(validate(schema.updatePost), comments.updateComment);
 
 // Get a comment by Id
-commentRouter.route("/comments/:commentId").get(comments.getCommentById);
+commentRouter
+  .route("/posts/:postId/comments/:commentId")
+  .get(comments.getCommentById);
 
 export default commentRouter;
