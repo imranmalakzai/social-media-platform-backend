@@ -17,3 +17,8 @@ commentRouter.route("/comments/:commentId").get(comments.deleteComment);
 
 // Update a comment
 commentRouter.route("/comments/:commentId").patch(comments.updateComment);
+
+// Get a comment by Id
+commentRouter.route("/comments/:commentId").get(comments.getCommentById);
+
+export default commentRouter;
