@@ -2,6 +2,7 @@ import express from "express";
 import * as Users from "../controllers/users.controller.js";
 import * as Schema from "../validation/users.validation.js";
 import { validate } from "../middleware/zod.middleware.js";
+import * as rateLimit from "../middleware/rateLimit.middleware.js";
 import { auth } from "../middleware/auth.middleware.js";
 
 const userRouter = express.Router();
@@ -12,7 +13,9 @@ userRouter
   .post(validate(Schema.register), Users.register);
 
 // Login
-userRouter.route("/auth/login").post(validate(Schema.login), Users.login);
+userRouter
+  .route("/auth/login")
+  .post(validate(Schema.login), rateLimit.loginLimiter, Users.login);
 
 // Logout
 userRouter.route("/auth/logout").post(Users.logout);
