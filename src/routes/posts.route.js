@@ -18,3 +18,22 @@ postRouter.route("/users/:userId/posts").get(Posts.getUserPosts);
 
 // Get user post by Id
 postRouter.route("/users/:userId/posts/:postId").get(Posts.getUserPostById);
+
+// Get My post
+postRouter.route("/me/posts").get(Posts.getMyPosts);
+
+// Get my post by Id
+postRouter.route("/me/posts/:postId").get(Posts.getMyPostById);
+
+// update a post
+postRouter.route("/me/posts/:postId").patch(Posts.updatePost);
+
+// delete a post
+postRouter.route("/me/posts/:postId").patch(Posts.deletePost);
+
+// update post visibility
+postRouter
+  .route("/me/posts/:postId/visibility")
+  .patch(Posts.updatePostVisibility);
+
+export default postRouter;
