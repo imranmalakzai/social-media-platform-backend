@@ -35,12 +35,20 @@ userRouter
 // Forgot-password
 userRouter
   .route("/auth/forgot-password")
-  .post(validate(Schema.forgetPassword), Users.forgetPassword);
+  .post(
+    validate(Schema.forgetPassword),
+    rateLimit.otpRequestLimiter,
+    Users.forgetPassword,
+  );
 
 // Reset Password
 userRouter
   .route("/auth/reset-password")
-  .post(validate(Schema.resetPassword), Users.resetPassword);
+  .post(
+    validate(Schema.resetPassword),
+    rateLimit.otpVerifyLimiter,
+    Users.resetPassword,
+  );
 
 // handle auth
 userRouter.use(auth);
