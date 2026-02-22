@@ -1,5 +1,4 @@
 import { pool } from "../config/db.config.js";
-import { refreshToken } from "../utils/jwt.js";
 
 // create new user
 export const create = async (user) => {
