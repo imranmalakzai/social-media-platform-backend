@@ -78,3 +78,5 @@ userRouter.route("/users").get(Users.getAllUsers);
 
 // Get a user by id
 userRouter.route("/users/:userId").get(Users.getUserById);
+
+export default userRouter;
