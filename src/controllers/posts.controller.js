@@ -109,9 +109,17 @@ export const deletePost = asyncHandler(async (req, res) => {
 
 // update post visibility
 export const updatePostVisibility = asyncHandler(async (req, res) => {
+  const { postId } = req.params;
   const { visibility } = req.body;
 
-  const result = await postDb.changeVisibility(visibility);
+  // post exist
+  const post = await postDb.findById(postId);
+
+  if (!post || req.user.id.toString() !== post.user_id.toString()) {
+    throw new ApiError("post not exist", 404);
+  }
+
+  const result = await postDb.changeVisibility(visibility, postId);
   if (result === 0) throw new ApiError("Interal server error", 500);
 
   res.status(200).json({ message: "visibility updated successfully" });
