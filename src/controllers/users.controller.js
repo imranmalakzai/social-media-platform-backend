@@ -6,7 +6,7 @@ import * as userDb from "../repository/users.repository.js";
 import ApiError from "../utils/ApiError.js";
 import * as generate from "../utils/jwt.js";
 import * as env from "../config/env.config.js";
-import * as otpDb from "../repository/opt.repository.js";
+import * as otpDb from "../repository/otp.repository.js";
 import { eventBus } from "../events/eventBus.js";
 
 // Register a user
