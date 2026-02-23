@@ -5,7 +5,7 @@ import * as comments from "../controllers/comments.controller.js";
 import * as schema from "../validation/comments.valiation.js";
 import { validate } from "../middleware/zod.middleware.js";
 
-const commentRouter = express.Router({ mergeParams: true });
+const commentRouter = express.Router();
 
 commentRouter.use(auth);
 
