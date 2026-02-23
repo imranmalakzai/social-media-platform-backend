@@ -1,6 +1,6 @@
 import { eventBus } from "../events/eventBus.js";
 import { logger } from "../config/logger.config.js";
-import * as otpDb from "../repository/opt.repository.js";
+import * as otpDb from "../repository/otp.repository.js";
 import { sendOtpEmail } from "../services/email.services.js";
 import crypto from "crypto";
 
