@@ -32,9 +32,9 @@ userRouter
     Users.verifyEmail,
   );
 
-// Forgot-password
+// Forget-password
 userRouter
-  .route("/auth/forgot-password")
+  .route("/auth/forget-password")
   .post(
     validate(Schema.forgetPassword),
     rateLimit.otpRequestLimiter,
