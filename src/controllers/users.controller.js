@@ -170,9 +170,9 @@ export const getRefreshAcessToken = asyncHandler(async (req, res) => {
 
   // check in db for token
   const token = await userDb.findByToken(refreshToken);
-  const user = jwt.verify(token, env.JWT_REFRESH_TOKEN_SECRET);
+  const user = jwt.verify(refreshToken, env.JWT_REFRESH_TOKEN_SECRET);
 
-  // comparete token
+  // compare token
   if (!refreshToken || !token || !user || user.id !== token.id) {
     throw new ApiError("Invalid Token", 401);
   }
