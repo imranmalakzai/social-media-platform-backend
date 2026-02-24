@@ -66,7 +66,7 @@ export const forgetPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
   // user exist
-  const user = userDb.findByEmail(email);
+  const user = await userDb.findByEmail(email);
   if (!user) throw new ApiError("user not exist", 404);
 
   setImmediate(() => {
