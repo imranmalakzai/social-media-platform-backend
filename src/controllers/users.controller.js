@@ -131,6 +131,9 @@ export const login = asyncHandler(async (req, res) => {
   const accessToken = await generate.accessToken(user);
   const refreshToken = await generate.refreshToken(user);
 
+  // save refresh token in db
+  await userDb.saveToken(refreshToken, user.id);
+
   // options
   const options = {
     httpOnly: true,
