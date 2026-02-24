@@ -1,13 +1,14 @@
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
-import { asyncHandler } from "../utils/asyncHandler.js";
+
 import * as userDb from "../repository/users.repository.js";
-import ApiError from "../utils/ApiError.js";
 import * as generate from "../utils/jwt.js";
 import * as env from "../config/env.config.js";
 import * as otpDb from "../repository/otp.repository.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 import { eventBus } from "../events/eventBus.js";
+import ApiError from "../utils/ApiError.js";
 
 // Register a user
 export const register = asyncHandler(async (req, res) => {
