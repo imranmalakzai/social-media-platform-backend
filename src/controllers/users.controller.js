@@ -112,6 +112,11 @@ export const login = asyncHandler(async (req, res) => {
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) throw new ApiError("Invalid cridential", 400);
 
+  // if not verified access denied
+  if (user.is_verified.toString() !== "1") {
+    throw new ApiError("Access denied please verify your email first", 403);
+  }
+
   // genereate tokens
   const accessToken = generate.accessToken(user);
   const refreshToken = generate.refreshToken(user);
