@@ -97,3 +97,12 @@ export const updateToken = async (token) => {
   );
   return result.affectedRows;
 };
+
+// save refresh token
+export const saveToken = async (token, userId) => {
+  const [result] = await pool.query(
+    "INSERT INTO users set refresh_token = ? WHERE id = ?",
+    [token, userId],
+  );
+  return result.insertId;
+};
