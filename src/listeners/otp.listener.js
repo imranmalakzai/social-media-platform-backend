@@ -11,8 +11,10 @@ eventBus.on("USER.REGISTERED", async ({ userId, email }) => {
     const otpHash = crypto.createHash("sha256").update(otp).digest("hex");
     await otpDb.create(userId, otpHash, "VERIFY_EMAIL");
     // send otp email
-    await sendOtpEmail(email, otp);
+    console.log("Your OTP is : ", otp);
+    // await sendOtpEmail(email, otp);
   } catch (error) {
+    console.log(error);
     logger.error("Error in send opt event", {
       userId,
       error: error.message,
