@@ -6,7 +6,7 @@ import crypto from "crypto";
 
 eventBus.on("RESET.PASSWORD", async ({ userId, email }) => {
   try {
-    const otp = Math.floor(100000 * Math.random() * 6000000);
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const hashOtp = crypto.createHash("sha256").update(otp).digest("hex");
     await otpDb.create(userId, hashOtp, "RESET_PASSWORD");
     // sendOtpEmail(email, otp);
