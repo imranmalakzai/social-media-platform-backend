@@ -128,8 +128,8 @@ export const login = asyncHandler(async (req, res) => {
   }
 
   // genereate tokens
-  const accessToken = generate.accessToken(user);
-  const refreshToken = generate.refreshToken(user);
+  const accessToken = await generate.accessToken(user);
+  const refreshToken = await generate.refreshToken(user);
 
   // options
   const options = {
