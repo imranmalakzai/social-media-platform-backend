@@ -18,7 +18,16 @@ export const register = asyncHandler(async (req, res) => {
   const user = await userDb.findByEmail(email);
   if (user) throw new ApiError("Email is already in used", 400);
 
-  const result = await userDb.create({ username, email, password });
+  // hash password
+  const hashPassword = await bcrypt.hash(password, 10);
+
+  // result
+  const result = await userDb.create({
+    username,
+    email,
+    password: hashPassword,
+  });
+
   if (result === 0) throw new ApiError("Internal server error", 500);
 
   setImmediate(() => {
