@@ -237,7 +237,9 @@ export const updatePassword = asyncHandler(async (req, res) => {
 
   const user = await userDb.findById(req.user.id);
 
-  if (oldPassword !== user.password) {
+  const isMatch = await bcrypt.compare(oldPassword, user.password);
+
+  if (!isMatch) {
     throw new ApiError("Invalid old password", 400);
   }
 

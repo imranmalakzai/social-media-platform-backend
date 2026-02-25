@@ -4,6 +4,7 @@ import * as Schema from "../validation/users.validation.js";
 import { validate } from "../middleware/zod.middleware.js";
 import * as rateLimit from "../middleware/rateLimit.middleware.js";
 import { auth } from "../middleware/auth.middleware.js";
+import { upload } from "../config/multer.config.js";
 
 const userRouter = express.Router();
 
