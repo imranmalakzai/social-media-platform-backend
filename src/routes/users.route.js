@@ -54,24 +54,24 @@ userRouter
 userRouter.use(auth);
 
 // Get Current user
-userRouter.route("/me").get(Users.getLoggenUser);
+userRouter.route("/users/me").get(Users.getLoggenUser);
 
 // delete account
-userRouter.route("/me").delete(Users.removeAccount);
+userRouter.route("/users/me").delete(Users.removeAccount);
 
 // update profile
-userRouter.route("/me/update-profile").patch(Users.updateProfile);
+userRouter.route("/users/me/update-profile").patch(Users.updateProfile);
 
 // change password
 userRouter
-  .route("/me/change-password")
+  .route("/users/me/change-password")
   .patch(validate(Schema.changePassword), Users.updatePassword);
 
 // change avatar
-userRouter.route("/me/change-avatar").patch(Users.updateAvatar);
+userRouter.route("/users/me/change-avatar").patch(Users.updateAvatar);
 
 // change cover image image
-userRouter.route("/me/change-coverimage").patch(Users.updateCoverImage);
+userRouter.route("/users/me/change-coverimage").patch(Users.updateCoverImage);
 
 // Get all users
 userRouter.route("/users").get(Users.getAllUsers);
