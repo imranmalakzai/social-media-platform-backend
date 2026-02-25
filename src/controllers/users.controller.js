@@ -286,5 +286,5 @@ export const updateCoverImage = asyncHandler(async (req, res) => {
   const result = await userDb.updateCoverImage(image, req.user.id);
   if (result === 0) throw new ApiError("Internal server error", 500);
 
-  res.status(200).json({ message: "profile udpated successfully" });
+  res.status(200).json({ message: "cover image udpated successfully" });
 });
