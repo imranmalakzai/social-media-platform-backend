@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import ApiError from "../utils/ApiError.js";
 import * as env from "../config/env.config.js";
 
-export const auth = async () => {
+export const auth = async (req, res, next) => {
   try {
     const header = req.headers.authorization;
 
