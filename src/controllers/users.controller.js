@@ -146,7 +146,18 @@ export const login = asyncHandler(async (req, res) => {
   res
     .status(200)
     .cookie("refreshToken", refreshToken, options)
-    .json({ accessToken, user });
+    .json({
+      accessToken,
+      user: {
+        id: user.id,
+        username: user.name,
+        bio: user.bio,
+        email: user.email,
+        profile_image: user.profile_image,
+        cover_image: user.cover_image,
+        is_verified: user.is_verified,
+      },
+    });
 });
 
 // logout
