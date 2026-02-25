@@ -30,7 +30,7 @@ eventBus.on("PASSWORD.RESET", async ({ userId, email }) => {
     // save in db
     await otpDb.create(userId, otpHash, "RESET_PASSWORD");
     // send email
-    await sendOtpEmail(email, otp);
+    console.log(otp);
   } catch (error) {
     logger.error("ERROR IN RESET PASSWORD listener", {
       userId,

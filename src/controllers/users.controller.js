@@ -82,7 +82,7 @@ export const forgetPassword = asyncHandler(async (req, res) => {
 
 // Reset Password
 export const resetPassword = asyncHandler(async (req, res) => {
-  const { email, otp, newPassword } = req.body;
+  const { email, otp, password } = req.body;
 
   // user exist
   const user = await userDb.findByEmail(email);
@@ -94,14 +94,16 @@ export const resetPassword = asyncHandler(async (req, res) => {
     .digest("hex")
     .toString();
   // valid otp
-  const isValid = await otpDb.findValidOtp(user.id, "RESET.PASSWORD");
+  const isValid = await otpDb.findValidOtp(user.id, "RESET_PASSWORD");
+
+  console.log(isValid);
 
   if (!isValid || otpHash !== isValid.otp_hash) {
     throw new ApiError("Invalid otp or otp is expired", 400);
   }
 
   // hashPassword
-  const hashPassword = await bcrypt.hash(newPassword, 10);
+  const hashPassword = await bcrypt.hash(password, 10);
 
   const updatePassword = await userDb.updatePassword(hashPassword, user.id);
   if (updatePassword === 0) throw new ApiError("Interal server error", 500);
