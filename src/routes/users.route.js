@@ -69,7 +69,9 @@ userRouter
   .patch(validate(Schema.changePassword), Users.updatePassword);
 
 // change avatar
-userRouter.route("/users/me/change-avatar").patch(Users.updateAvatar);
+userRouter
+  .route("/users/me/change-avatar")
+  .patch(upload.single("avatar"), Users.updateAvatar);
 
 // change cover image image
 userRouter.route("/users/me/change-coverimage").patch(Users.updateCoverImage);
