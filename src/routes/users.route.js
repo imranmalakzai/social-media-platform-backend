@@ -74,7 +74,9 @@ userRouter
   .patch(upload.single("avatar"), Users.updateAvatar);
 
 // change cover image image
-userRouter.route("/users/me/change-coverimage").patch(Users.updateCoverImage);
+userRouter
+  .route("/users/me/change-coverimage")
+  .patch(upload.single("cover_image"), Users.updateCoverImage);
 
 // Get all users
 userRouter.route("/users").get(Users.getAllUsers);
