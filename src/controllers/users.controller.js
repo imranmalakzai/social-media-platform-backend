@@ -205,11 +205,20 @@ export const getUserById = asyncHandler(async (req, res) => {
   const user = await userDb.findById(userId);
   if (!user) throw new ApiError("user not exist", 404);
 
-  const { id, username, profile_image, background_image } = user;
+  const { id, username, profile_image, cover_image, bio, is_verified, email } =
+    user;
 
-  res
-    .status(200)
-    .json({ user: { id, username, profile_image, background_image, email } });
+  res.status(200).json({
+    user: {
+      id,
+      username,
+      bio,
+      profile_image,
+      cover_image,
+      email,
+      is_verified,
+    },
+  });
 });
 
 // Delete Account
