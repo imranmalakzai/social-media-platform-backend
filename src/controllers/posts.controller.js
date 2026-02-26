@@ -170,7 +170,9 @@ export const getUserPostById = asyncHandler(async (req, res) => {
 
   // post
   const post = await postDb.findById(postId);
-  if (!post) throw new ApiError("post not exist", 400);
+
+  if (!post || post.user_id.toString() !== userId.toString())
+    throw new ApiError("post not exist", 400);
 
   res.status(200).json({ post });
 });
