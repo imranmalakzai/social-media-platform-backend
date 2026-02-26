@@ -30,7 +30,7 @@ postRouter.route("/users/me/posts/:postId").get(Posts.getMyPostById);
 // update a post
 postRouter
   .route("/users/me/posts/:postId")
-  .patch(validate(schema.updatePost), Posts.updatePost);
+  .patch(upload.single("image"), Posts.updatePost);
 
 // delete a post
 postRouter.route("/users/me/posts/:postId").patch(Posts.deletePost);
