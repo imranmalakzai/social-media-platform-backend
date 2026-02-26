@@ -37,7 +37,10 @@ export const changeVisibility = async (visibility, postId) => {
 
 // Get a post by id
 export const findById = async (postId) => {
-  const [rows] = await pool.query("SELECT * FROM post WHERE id = ?", [postId]);
+  const [rows] = await pool.query(
+    "SELECT p.*,u.profile_image,u.username as author FROM posts p JOIN users u ON p.user_id = u.id  WHERE p.visibility = 'public' AND p.id = ?",
+    [postId],
+  );
   return rows[0];
 };
 
