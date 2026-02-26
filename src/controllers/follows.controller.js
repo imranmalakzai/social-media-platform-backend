@@ -12,6 +12,10 @@ export const follow = asyncHandler(async (req, res) => {
   const user = await userDb.findById(userId);
   if (!user) throw new ApiError("user not exist", 404);
 
+  if (userId === req.user.id) {
+    throw new ApiError("you can't follow yourself", 400);
+  }
+
   const following = await followDb.findFollowedUser(req.user.id, userId);
   if (!following) await followDb.create(req.user.id, userId);
 
