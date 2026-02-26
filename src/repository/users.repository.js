@@ -34,7 +34,9 @@ export const findByEmail = async (email) => {
 
 // Get all users
 export const find = async () => {
-  const [rows] = await pool.query("SELECT * FROM users");
+  const [rows] = await pool.query(
+    "SELECT id,username,email,profile_image,cover_image,bio,is_verified FROM users",
+  );
   return rows;
 };
 
