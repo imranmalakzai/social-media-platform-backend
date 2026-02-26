@@ -52,7 +52,7 @@ export const findAll = async () => {
 // Gell all posts of a user
 export const findUserPosts = async (userId) => {
   const [rows] = await pool.query(
-    "SELECT p.*,u.profile_image,u.username as author FROM posts p JOIN users u ON p.user_id = u.id p.visibility = 'public' AND p.user_id = ?",
+    "SELECT p.*,u.profile_image,u.username as author FROM posts p JOIN users u ON p.user_id = u.id WHERE p.visibility = 'public' AND p.user_id = ?",
     [userId],
   );
   return rows;
