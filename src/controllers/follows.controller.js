@@ -22,7 +22,7 @@ export const follow = asyncHandler(async (req, res) => {
     });
   });
 
-  res.status(200).json({ message: "Followed successfullyss" });
+  res.status(200).json({ message: "Followed successfully" });
 });
 
 // Unfollow a user

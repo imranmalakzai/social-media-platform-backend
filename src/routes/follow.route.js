@@ -6,10 +6,10 @@ const followRouter = express.Router();
 
 followRouter.use(auth);
 // Follow a user
-followRouter.route("/follow").post(User.follow);
+followRouter.route("/follow/:userId").post(User.follow);
 
 // Unfollow a user
-followRouter.route("/follow").delete(User.unfollow);
+followRouter.route("/follow/:userId").delete(User.unfollow);
 
 //User Followers
 followRouter.route("/users/:userId/followers").get(User.getUserFollowers);
