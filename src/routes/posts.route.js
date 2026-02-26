@@ -1,5 +1,6 @@
 import express from "express";
 import { validate } from "../middleware/zod.middleware.js";
+import { upload } from "../config/multer.config.js";
 import { auth } from "../middleware/auth.middleware.js";
 import * as Posts from "../controllers/posts.controller.js";
 import * as schema from "../validation/posts.validation.js";
@@ -18,7 +19,7 @@ postRouter.use(auth);
 // create a post
 postRouter
   .route("/users/me/posts")
-  .post(validate(schema.createPost), Posts.createPost);
+  .post(upload.single("image"), Posts.createPost);
 
 // Get My post
 postRouter.route("/users/me/posts").get(Posts.getMyPosts);
