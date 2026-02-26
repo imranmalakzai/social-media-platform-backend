@@ -15,34 +15,34 @@ postRouter.route("/posts/:postId").get(Posts.getAPostById);
 
 postRouter.use(auth);
 
+// create a post
+postRouter
+  .route("/users/me/posts")
+  .post(validate(schema.createPost), Posts.createPost);
+
+// Get My post
+postRouter.route("/users/me/posts").get(Posts.getMyPosts);
+
+// Get my post by Id
+postRouter.route("/users/me/posts/:postId").get(Posts.getMyPostById);
+
+// update a post
+postRouter
+  .route("/users/me/posts/:postId")
+  .patch(validate(schema.updatePost), Posts.updatePost);
+
+// delete a post
+postRouter.route("/users/me/posts/:postId").patch(Posts.deletePost);
+
+// update post visibility
+postRouter
+  .route("/users/me/posts/:postId/visibility")
+  .patch(validate(schema.updatePostVisibility), Posts.updatePostVisibility);
+
 // Get user posts
 postRouter.route("/users/:userId/posts").get(Posts.getUserPosts);
 
 // Get user post by Id
 postRouter.route("/users/:userId/posts/:postId").get(Posts.getUserPostById);
-
-// create a post
-postRouter
-  .route("/me/posts")
-  .post(validate(schema.createPost), Posts.createPost);
-
-// Get My post
-postRouter.route("/me/posts").get(Posts.getMyPosts);
-
-// Get my post by Id
-postRouter.route("/me/posts/:postId").get(Posts.getMyPostById);
-
-// update a post
-postRouter
-  .route("/me/posts/:postId")
-  .patch(validate(schema.updatePost), Posts.updatePost);
-
-// delete a post
-postRouter.route("/me/posts/:postId").patch(Posts.deletePost);
-
-// update post visibility
-postRouter
-  .route("/me/posts/:postId/visibility")
-  .patch(validate(schema.updatePostVisibility), Posts.updatePostVisibility);
 
 export default postRouter;
