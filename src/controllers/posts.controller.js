@@ -15,7 +15,7 @@ export const createPost = asyncHandler(async (req, res) => {
   //  Create the post
   const post = await postDb.create({
     caption,
-    image,
+    image: image || null,
     user_id: req.user.id,
     visibility,
   });
