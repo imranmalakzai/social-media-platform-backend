@@ -42,3 +42,12 @@ export const findById = async (commentId) => {
   ]);
   return rows;
 };
+
+// Get a post comment by Id
+export const findPostCommentById = async (commentId, postId) => {
+  const [rows] = await pool.query(
+    "SELECT * FROM comments WHERE id = ? AND post_id = ?",
+    [commentId, postId],
+  );
+  return rows[0];
+};
