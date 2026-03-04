@@ -11,6 +11,7 @@ import posts from "./routes/posts.route.js";
 import likes from "./routes/likes.route.js";
 import follow from "./routes/follow.route.js";
 import comments from "./routes/comments.route.js";
+import notification from "./routes/notifications.route.js";
 
 import { globalErrorHandler } from "./middleware/globalErrorHandler.middleware.js";
 
@@ -18,7 +19,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({ credentials: true, origin: env.CORS_ORIGIN }));
+app.use(cors({ credentials: true, origin: "*" }));
 app.use(cookieParser());
 
 // Health endpoints
@@ -32,6 +33,7 @@ app.use("/api/", likes);
 app.use("/api/", follow);
 app.use("/api/", comments);
 app.use("/api/", savePosts);
+app.use("/api/", notification);
 
 // Custom middlewares
 app.use(globalErrorHandler);
