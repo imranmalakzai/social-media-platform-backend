@@ -62,16 +62,14 @@ export const deleteComment = asyncHandler(async (req, res) => {
   const { postId } = req.params;
   const { commentId } = req.params;
 
-  //post exist
-  const post = await postDb.findById(postId);
-  if (!post) throw new ApiError("Post not exist", 404);
+  //comment
+  const comment = await commentDb.findPostCommentById(commentId, postId);
+  if (!comment) throw new ApiError("comment not exist", 404);
 
-  // comment exist
-  const comment = await commentDb.findById(commentId);
-  const owner = req.user.id.toString() === comment.id.toString();
+  const owner = req.user.id.toString() === comment.user_id.toString();
 
-  if (!comment || !owner) {
-    throw new ApiError("Invalid request", 400);
+  if (!owner) {
+    throw new ApiError("Access denied", 400);
   }
 
   // result
