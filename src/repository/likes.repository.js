@@ -12,7 +12,7 @@ export const create = async (user_id, post_id) => {
 // Delete (unlike a post)
 export const remove = async (user_id, post_id) => {
   const [result] = await pool.query(
-    "DELETE FROM likes WHERE (user_id,post_id) VALUES (?,?)",
+    "DELETE FROM likes WHERE user_id = ? and post_id = ?",
     [user_id, post_id],
   );
   return result.affectedRows;
