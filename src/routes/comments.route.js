@@ -17,19 +17,19 @@ commentRouter
 // Get all comments
 commentRouter.route("/posts/:postId/comments").get(comments.postComments);
 
+// Get a comment by Id
+commentRouter
+  .route("/posts/:postId/comments/:commentId")
+  .get(comments.getCommentById);
+
 // Delete a comment
 commentRouter
   .route("/posts/:postId/comments/:commentId")
-  .get(comments.deleteComment);
+  .delete(comments.deleteComment);
 
 // Update a comment
 commentRouter
   .route("/posts/:postId/comments/:commentId")
   .patch(validate(schema.updatePost), comments.updateComment);
-
-// Get a comment by Id
-commentRouter
-  .route("/posts/:postId/comments/:commentId")
-  .get(comments.getCommentById);
 
 export default commentRouter;
