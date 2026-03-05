@@ -57,3 +57,12 @@ export const bulkInsert = async (values) => {
   );
   return result.affectedRows;
 };
+
+// Get user notification by Id
+export const userNotificationById = async (notificationId, userId) => {
+  const [rows] = await pool.query(
+    "SELECT * FROM notifications WHERE id = ? and recipient_id = ?",
+    [notificationId, userId],
+  );
+  return rows[0];
+};
