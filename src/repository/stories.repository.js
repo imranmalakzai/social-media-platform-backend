@@ -23,7 +23,7 @@ export const remove = async (id) => {
 // Get all active stories
 export const findAll = async () => {
   const [rows] = await pool.query(
-    "SELECT s.*,u.username,u.profile_image FROM stories s JOIN users u ON s.user_id = u.id  AND s.expires_at <= NOW()",
+    "SELECT s.*,u.username,u.profile_image FROM stories s JOIN users u ON s.user_id = u.id  AND s.expires_at >= NOW()",
   );
   return rows;
 };
