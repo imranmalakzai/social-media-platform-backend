@@ -39,26 +39,9 @@ export const notification = asyncHandler(async (req, res) => {
     req.user.id,
   );
   if (!notification) throw new ApiError("Notification not exist", 404);
+  await notificationDb.markRead(notificationId);
 
   res.status(200).json({ notification });
-});
-
-// Mark Notification as read
-export const markAsRead = asyncHandler(async (req, res) => {
-  const { notificationId } = req.params;
-
-  // notification exist
-  const notification = await notificationDb.userNotificationById(
-    notificationId,
-    req.user.id,
-  );
-  if (!notification) throw new ApiError("Notificaiton not exist", 404);
-
-  // Resutlt
-  const result = await notificationDb.markRead(notificationId);
-  if (result === 0) throw new ApiError("Internal server error", 500);
-
-  res.status(200).json({ message: "read" });
 });
 
 // Mark all notifications as read
