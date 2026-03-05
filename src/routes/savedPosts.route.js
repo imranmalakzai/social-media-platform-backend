@@ -10,7 +10,7 @@ archiveRouter.use(auth);
 archiveRouter.route("/me/saved-posts").get(archive.getSavedPosts);
 
 // Save a post
-archiveRouter.route("/me/saved-posts").post(archive.savePosts);
+archiveRouter.route("/me/saved-posts/:postId").post(archive.savePosts);
 
 // Delete a saved post
 archiveRouter.route("/me/saved-posts/:postId").delete(archive.deleteSavePost);
