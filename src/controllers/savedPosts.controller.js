@@ -8,16 +8,19 @@ export const savePosts = asyncHandler(async (req, res) => {
   const { postId } = req.params;
 
   // post exist
-  const post = postDb.findById(postId);
+  const post = await postDb.findById(postId);
   if (!post) throw new ApiError("Post not exist", 404);
 
   // is already saved ?
-  const savePost = archiveDb.findById(postId);
+  const savePost = await archiveDb.findById(postId, req.user.id);
   if (savePost) {
     return res.status(200).json({ message: "Post Saved successfully" });
   }
 
-  const archive = archiveDb.create({ user_id: req.user.id, post_id: postId });
+  const archive = await archiveDb.create({
+    user_id: req.user.id,
+    post_id: postId,
+  });
   if (archive === 0) throw new ApiError("Interanal server error", 500);
 
   res.status(200).json({ message: "Post Saved successfully" });
@@ -28,7 +31,7 @@ export const deleteSavePost = asyncHandler(async (req, res) => {
   const { postId } = req.params;
 
   // post exist
-  const savedPost = archiveDb.findById(postId, req.user.id);
+  const savedPost = await archiveDb.findById(postId, req.user.id);
   if (!savedPost) throw new ApiError("saved post not exist", 404);
 
   // delete
@@ -40,7 +43,7 @@ export const deleteSavePost = asyncHandler(async (req, res) => {
 
 // Get all saved posts
 export const getSavedPosts = asyncHandler(async (req, res) => {
-  const posts = archiveDb.findAll(req.user.id);
+  const posts = await archiveDb.findAll(req.user.id);
   res.status(200).json({ posts: posts || [] });
 });
 
