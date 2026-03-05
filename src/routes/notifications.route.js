@@ -16,10 +16,12 @@ notificationRouter.route("/me/notifications").get(notification.notifications);
 
 // Get notification by Id && read notification
 notificationRouter
-  .route("/me/notifications/:notificaitonId")
+  .route("/me/notifications/:notificationId")
   .get(notification.notification);
 
 // Read all notificaitons
-notificationRouter.route("/me/notifications/read-all");
+notificationRouter
+  .route("/me/notifications/read-all")
+  .patch(notification.readAll);
 
 export default notificationRouter;
