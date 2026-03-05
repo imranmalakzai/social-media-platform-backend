@@ -60,3 +60,9 @@ export const markAsRead = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "read" });
 });
+
+// Mark all notifications as read
+export const readAll = asyncHandler(async (req, res) => {
+  await notificationDb.markReadAll(req.user.id);
+  res.status(200).json({ message: "read all " });
+});
