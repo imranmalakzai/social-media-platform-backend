@@ -5,6 +5,7 @@ import * as storyDb from "../repository/stories.repository.js";
 //create story
 export const createStory = asyncHandler(async (req, res) => {
   const image = req.file?.path;
+  if (!image) throw new ApiError("Please select an image", 400);
 
   // create storie
   const story = await storyDb.create({ image, user_id: req.user.id });
