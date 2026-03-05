@@ -6,8 +6,20 @@ const notificationRouter = express.Router();
 
 notificationRouter.use(auth);
 
+// Reall Time notifications
 notificationRouter
-  .route("/notification/stream")
+  .route("/me/notifications/stream")
   .get(notification.notificationStream);
+
+// Get all notifications
+notificationRouter.route("/me/notifications").get(notification.notifications);
+
+// Get notification by Id && read notification
+notificationRouter
+  .route("/me/notifications/:notificaitonId")
+  .get(notification.notification);
+
+// Read all notificaitons
+notificationRouter.route("/me/notifications/read-all");
 
 export default notificationRouter;
