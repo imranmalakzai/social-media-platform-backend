@@ -36,3 +36,12 @@ export const findById = async (storyId) => {
   );
   return rows[0];
 };
+
+// User Story by Id
+export const findUserStoryById = async (storyId, userId) => {
+  const [rows] = await pool.query(
+    "SELECT id FROM users WHERE id = ? AND user_id = ?",
+    [id, userId],
+  );
+  return rows[0];
+};
